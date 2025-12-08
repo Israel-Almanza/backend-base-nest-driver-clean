@@ -1,22 +1,18 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { CrearUsuarioUseCase } from '../../application/use-cases/crear-usuario.usecase';
-import { UsuarioRepositoryImpl } from '../../infrastructure/repositories/usuario.repository.impl';
+import { UsuarioService } from '@/application/services/usuario.service';
 
 @Controller('usuarios')
 export class UsuarioController {
-  private useCase: CrearUsuarioUseCase;
 
-  constructor(repo: UsuarioRepositoryImpl) {
-    this.useCase = new CrearUsuarioUseCase(repo);
-  }
+  constructor(private readonly usuarioService: UsuarioService) {}
 
   @Post()
   crear(@Body() body: any) {
-    return this.useCase.execute(body.nombre, body.apellido);
+    return this.usuarioService.crear(body.usuario);
   }
 
   @Get()
   listar() {
-    return this.useCase['repo'].findAll();
+    return this.usuarioService.listar();
   }
 }
