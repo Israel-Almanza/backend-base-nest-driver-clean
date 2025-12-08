@@ -16,7 +16,7 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     private readonly genericRepo: GenericRepository, // ✅ inyectado
   ) {}
 
-  async create(usuario: Usuario): Promise<Usuario> {
+  async create(usuario: Usuario ): Promise<Usuario> {
     const model = await this.genericRepo.createOrUpdate(
       { usuario: usuario.usuario },
       this.usuarioModel,
