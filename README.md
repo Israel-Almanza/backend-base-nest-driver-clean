@@ -4,6 +4,11 @@ Node version 20.19.2
 
 Controller → Service → Repository → Database
 
+## 📐 Arquitectura del Proyecto
+
+![Arquitectura Clean Hexagonal](./docs/arquitectura.png)
+
+
 ESTRUCTURA FINAL DEL PROYECTO
 
 src/

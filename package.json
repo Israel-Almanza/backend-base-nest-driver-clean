@@ -2,6 +2,7 @@
   "name": "clean-nestjs-contable",
   "version": "1.0.0",
   "description": "Sistema contable con NestJS + Sequelize + PostgreSQL",
+  "author": "Israel Alamanza",
   "scripts": {
     "start": "nest start",
     "start:dev": "nest start --watch",
