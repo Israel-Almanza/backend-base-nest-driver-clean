@@ -1,0 +1,30 @@
+{
+  "name": "clean-nestjs-contable",
+  "version": "1.0.0",
+  "description": "Sistema contable con NestJS + Sequelize + PostgreSQL",
+  "scripts": {
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "build": "nest build"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/sequelize": "^10.0.0",
+    "@nestjs/swagger": "^11.2.3",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
+    "sequelize": "^6.37.0",
+    "sequelize-typescript": "^2.1.6",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.0.0",
+    "@nestjs/schematics": "^10.0.0",
+    "@nestjs/testing": "^10.0.0",
+    "typescript": "^5.2.2"
+  }
+}
