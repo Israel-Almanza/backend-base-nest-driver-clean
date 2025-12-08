@@ -2,6 +2,8 @@ Proyecto  Backend Base Driver Clean
 
 Node version 20.19.2
 
+Controller → Service → Repository → Database
+
 ESTRUCTURA FINAL DEL PROYECTO
 
 src/

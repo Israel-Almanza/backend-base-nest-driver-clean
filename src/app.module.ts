@@ -15,6 +15,7 @@ import { ClienteRepositoryImpl } from './infrastructure/repositories/cliente.rep
 
 // SERVICES ✅⬅️ ESTO FALTABA
 import { UsuarioService } from './application/services/usuario.service';
+import { GenericRepository } from './infrastructure/database/generic.repository';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UsuarioService } from './application/services/usuario.service';
    ],
   controllers: [ClienteController, UsuarioController], // ✅ agrega UsuarioController
   providers: [
+    GenericRepository,
     ClienteRepositoryImpl,
     UsuarioRepositoryImpl,
     UsuarioService,   // ✅ OBLIGATORIO

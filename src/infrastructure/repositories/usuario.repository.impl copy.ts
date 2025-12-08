@@ -5,28 +5,24 @@ import { UsuarioRepository } from '../../domain/repositories/usuario.repository'
 import { Usuario } from '../../domain/entities/usuario.entity';
 import { BaseMapper } from '../mappers/base.mapper';
 import { UsuarioMapper } from '../mappers/usuario.mapper';
-import { GenericRepository } from '../database/generic.repository';
 
 @Injectable()
 export class UsuarioRepositoryImpl implements UsuarioRepository {
   constructor(
     @InjectModel(UsuarioModel)
     private readonly usuarioModel: typeof UsuarioModel,
-
-    private readonly genericRepo: GenericRepository, // ✅ inyectado
   ) {}
 
   async create(usuario: Usuario): Promise<Usuario> {
-    const model = await this.genericRepo.createOrUpdate(
-      { usuario: usuario.usuario },
-      this.usuarioModel,
-    );
+    const nuevo = await this.usuarioModel.create({
+      usuario: usuario.usuario,
+    });
 
-    return UsuarioMapper.toDomain(model);
+    return new Usuario(nuevo.id, nuevo.usuario);
   }
 
   async findAll(): Promise<Usuario[]> {
-    const models = await this.genericRepo.findAll(this.usuarioModel);
+    const models = await this.usuarioModel.findAll();
     return BaseMapper.toDomainList(models, UsuarioMapper.toDomain);
   }
 }
