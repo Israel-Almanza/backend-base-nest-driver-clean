@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UsuarioRepositoryImpl } from '../../infrastructure/repositories/usuario.repository.impl';
 import { Usuario } from '../../domain/entities/usuario.entity';
 import { TransactionService } from '@/infrastructure/database/transaction.service';
+import { ErrorApp } from '@/domain/lib/error';
 
 @Injectable()
 export class UsuarioService {
@@ -28,8 +29,13 @@ export class UsuarioService {
     }
 
 
-    async listar(): Promise<Usuario[]> {
-        return this.repo.findAll();
+    async listar(params): Promise<{ count: number; rows: Usuario[] }> {
+        try {
+          const respuesta = await this.repo.findAll(params);   
+          return respuesta
+        } catch (error) {
+            throw new ErrorApp(error.message, 400);
+        }
     }
 }
 
