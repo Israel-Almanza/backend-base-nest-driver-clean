@@ -1,5 +1,7 @@
 import { Column, Model, Table } from 'sequelize-typescript';
+import { setTimestamps } from '@/infrastructure/lib/utils';
 
+@setTimestamps()
 @Table({ tableName: 'sys_usuario' }) // ✅ Nombre de la tabla personalizado
 export class UsuarioModel extends Model {
   @Column({ field: 'id_persona' }) // ⚡ Nombre personalizado en la DB
