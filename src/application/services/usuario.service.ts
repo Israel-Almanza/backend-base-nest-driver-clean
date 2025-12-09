@@ -17,7 +17,7 @@ export class UsuarioService {
         try {
             t = await this.transaction.create();
 
-            const result = await this.repo.create(
+            const result = await this.repo.createOrUpdate(
                 new Usuario(null, usuario), t );
 
             await this.transaction.commit(t);

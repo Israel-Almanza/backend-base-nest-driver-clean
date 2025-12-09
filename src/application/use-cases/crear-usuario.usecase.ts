@@ -6,6 +6,6 @@ export class CrearUsuarioUseCase {
 
   execute(nombre: string, apellido: string) {
     const usuario = new Usuario(0, nombre);
-    return this.repo.create(usuario);
+    return this.repo.createOrUpdate(usuario);
   }
 }

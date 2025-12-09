@@ -18,14 +18,10 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     private readonly genericRepo: GenericRepository, // ✅ inyectado
   ) {}
 
-  async create(usuario: Usuario , Usuario, t?: Transaction ): Promise<Usuario> {
-    const model = await this.genericRepo.createOrUpdate(
-      { usuario: usuario.usuario },
-      this.usuarioModel,
-      t, // ✅ ahora sí acepta transacción
-    );
-
-    return UsuarioMapper.toDomain(model);
+  async createOrUpdate(item: Usuario , t?: Transaction ): Promise<Usuario> {
+    return await this.genericRepo.createOrUpdate(item,this.usuarioModel,t);
+    // const model = await this.genericRepo.createOrUpdate(item,this.usuarioModel,t);
+    // return UsuarioMapper.toDomain(model);
   }
 
   async findAll(params: any): Promise<{ count: number; rows: Usuario[] }> {
