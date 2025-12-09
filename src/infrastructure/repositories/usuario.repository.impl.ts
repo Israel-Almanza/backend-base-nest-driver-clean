@@ -6,6 +6,7 @@ import { Usuario } from '../../domain/entities/usuario.entity';
 import { BaseMapper } from '../mappers/base.mapper';
 import { UsuarioMapper } from '../mappers/usuario.mapper';
 import { GenericRepository } from '../database/generic.repository';
+import { Transaction } from 'sequelize';
 
 @Injectable()
 export class UsuarioRepositoryImpl implements UsuarioRepository {
@@ -16,10 +17,11 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     private readonly genericRepo: GenericRepository, // ✅ inyectado
   ) {}
 
-  async create(usuario: Usuario ): Promise<Usuario> {
+  async create(usuario: Usuario , Usuario, t?: Transaction ): Promise<Usuario> {
     const model = await this.genericRepo.createOrUpdate(
       { usuario: usuario.usuario },
       this.usuarioModel,
+      t, // ✅ ahora sí acepta transacción
     );
 
     return UsuarioMapper.toDomain(model);

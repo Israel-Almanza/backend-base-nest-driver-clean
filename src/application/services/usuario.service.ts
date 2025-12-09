@@ -10,15 +10,7 @@ export class UsuarioService {
         private readonly transaction: TransactionService, // ✅ inyectado
     ) { }
 
-    async crear(usuario: string): Promise<Usuario> {
-      // if (!usuario) {
-      //   throw new Error('Nombre y apellido son obligatorios');
-      // }
-       
-      return this.repo.create(new Usuario(null, usuario));
-    }
-
-   /*  async crear(usuario: string): Promise<Usuario> {
+   async crear(usuario: string): Promise<Usuario> {
         let t;
 
         try {
@@ -33,7 +25,7 @@ export class UsuarioService {
             await this.transaction.rollback(t);
             throw error;
         }
-    } */
+    }
 
 
     async listar(): Promise<Usuario[]> {

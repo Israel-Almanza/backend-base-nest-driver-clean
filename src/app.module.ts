@@ -15,7 +15,10 @@ import { ClienteRepositoryImpl } from './infrastructure/repositories/cliente.rep
 
 // SERVICES ✅⬅️ ESTO FALTABA
 import { UsuarioService } from './application/services/usuario.service';
+
+// ✅ TRANSACTION SERVICE
 import { GenericRepository } from './infrastructure/database/generic.repository';
+import { TransactionService } from './infrastructure/database/transaction.service';
 
 @Module({
   imports: [
@@ -28,7 +31,8 @@ import { GenericRepository } from './infrastructure/database/generic.repository'
     ClienteRepositoryImpl,
     UsuarioRepositoryImpl,
     UsuarioService,   // ✅ OBLIGATORIO
-    // ClienteService,   // ✅ si lo estás usando
+    // ClienteService,   // ✅ si lo estás usando,
+    TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
 })
 export class AppModule {}
