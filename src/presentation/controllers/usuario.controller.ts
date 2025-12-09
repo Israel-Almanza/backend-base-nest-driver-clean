@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query , HttpException} from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Param, Query, HttpException } from '@nestjs/common';
 import { UsuarioService } from '@/application/services/usuario.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
@@ -10,7 +10,28 @@ export class UsuarioController {
 
   @Post()
   async crear(@Body() body: any) {
-    return await this.usuarioService.crear(body.usuario);
+    try {
+      const respuesta = await this.usuarioService.crear(body);
+      return new Respuesta('OK', Finalizado.OK, respuesta);
+    } catch (error) {
+      throw new HttpException(
+        new Respuesta(error.message, Finalizado.FAIL), error.httpCode || HttpCodes.userError,
+      );
+    }
+  }
+
+  @Put(':id')
+  async actualizar(@Param('id') id: number, @Body() datos: any) {
+    try {
+      datos.id = id
+      const respuesta = await this.usuarioService.actualizar(datos);
+      return new Respuesta('OK', Finalizado.OK, respuesta);
+    } catch (error) {
+      throw new HttpException(
+        new Respuesta(error.message, Finalizado.FAIL), error.httpCode || HttpCodes.userError,
+      );
+    }
+
   }
 
   @Get()
@@ -20,8 +41,7 @@ export class UsuarioController {
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error: any) {
       throw new HttpException(
-        new Respuesta(error.message, Finalizado.FAIL),
-        error.httpCode || HttpCodes.userError,
+        new Respuesta(error.message, Finalizado.FAIL), error.httpCode || HttpCodes.userError,
       );
     }
   }

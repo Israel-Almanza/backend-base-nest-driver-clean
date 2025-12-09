@@ -11,14 +11,36 @@ export class UsuarioService {
         private readonly transaction: TransactionService, // ✅ inyectado
     ) { }
 
-   async crear(usuario: string): Promise<Usuario> {
+    async crear(datos: any): Promise<Usuario> {
         let t;
+        try {
+            t = await this.transaction.create();
+            const result = await this.repo.createOrUpdate(new Usuario(null, datos.usuario, datos.idPersona, datos.idEntidad), t);
+            await this.transaction.commit(t);
+            return result;
+        } catch (error) {
+            await this.transaction.rollback(t);
+            throw error;
+        }
+    }
 
+    async actualizar(datos: any): Promise<Usuario> {
+        if (!datos.id) {
+            throw new Error('El ID es obligatorio para actualizar');
+        }
+        let t;
         try {
             t = await this.transaction.create();
 
             const result = await this.repo.createOrUpdate(
-                new Usuario(null, usuario), t );
+                new Usuario(
+                    datos.id,                     // ✅ AQUÍ YA VA EL ID
+                    datos.usuario,
+                    datos.idPersona,
+                    datos.idEntidad,
+                ),
+                t
+            );
 
             await this.transaction.commit(t);
             return result;
@@ -31,10 +53,9 @@ export class UsuarioService {
 
     async listar(params): Promise<{ count: number; rows: Usuario[] }> {
         try {
-          const respuesta = await this.repo.findAll(params);   
-          return respuesta
+            const respuesta = await this.repo.findAll(params);
+            return respuesta
         } catch (error) {
-            console.log('error ---> ', error)
             throw new ErrorApp(error.message, 400);
         }
     }
