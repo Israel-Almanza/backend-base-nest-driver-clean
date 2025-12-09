@@ -50,6 +50,14 @@ export class UsuarioService {
         }
     }
 
+    async findOne(params): Promise<Usuario> {
+        try {
+            const respuesta = await this.repo.findOne(params);
+            return respuesta
+        } catch (error) {
+            throw new ErrorApp(error.message, 400);
+        }
+    }
 
     async listar(params): Promise<{ count: number; rows: Usuario[] }> {
         try {

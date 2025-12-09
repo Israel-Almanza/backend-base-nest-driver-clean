@@ -18,6 +18,13 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     private readonly genericRepo: GenericRepository, // ✅ inyectado
   ) {}
 
+  async findOne(params= {} ): Promise<Usuario> {
+    const query: any = {};
+    query.where = params;
+    const result = await this.usuarioModel.findOne(query);
+    return result.toJSON();
+  }
+
   async createOrUpdate(item: Usuario , t?: Transaction ): Promise<Usuario> {
     return await this.genericRepo.createOrUpdate(item,this.usuarioModel,t);
     // const model = await this.genericRepo.createOrUpdate(item,this.usuarioModel,t);

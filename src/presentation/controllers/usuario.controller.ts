@@ -34,6 +34,19 @@ export class UsuarioController {
 
   }
 
+  @Get(':id')
+  async mostrar(@Param('id') id: number) {
+    try {
+      const respuesta = await this.usuarioService.findOne({id: id});
+      return new Respuesta('OK', Finalizado.OK, respuesta);
+    } catch (error) {
+      throw new HttpException(
+        new Respuesta(error.message, Finalizado.FAIL), error.httpCode || HttpCodes.userError,
+      );
+    }
+
+  }
+
   @Get()
   async listar(@Query() params: any) {
     try {
