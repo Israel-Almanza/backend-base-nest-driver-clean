@@ -34,6 +34,7 @@ export class UsuarioService {
           const respuesta = await this.repo.findAll(params);   
           return respuesta
         } catch (error) {
+            console.log('error ---> ', error)
             throw new ErrorApp(error.message, 400);
         }
     }
