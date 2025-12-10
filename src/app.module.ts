@@ -20,18 +20,25 @@ import { UsuarioService } from './application/services/usuario.service';
 import { GenericRepository } from './infrastructure/database/generic.repository';
 import { TransactionService } from './infrastructure/database/transaction.service';
 import { PersonaModel } from './infrastructure/database/models/persona.model';
+import { ParametroModel } from './infrastructure/database/models/parametro.model';
+import { ParametroController } from './presentation/controllers/parametro.controller';
+import { ParametroService } from './application/services/parametro.service';
+import { ParametroRepositoryImpl } from './infrastructure/repositories/parametro.repository.impl';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel,PersonaModel]), // ✅ agrega UsuarioModel
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel,PersonaModel, ParametroModel]), // ✅ agrega UsuarioModel
    ],
-  controllers: [ClienteController, UsuarioController], // ✅ agrega UsuarioController
+  controllers: [ClienteController, UsuarioController, ParametroController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
     ClienteRepositoryImpl,
     UsuarioRepositoryImpl,
+    ParametroRepositoryImpl,
+
     UsuarioService,   // ✅ OBLIGATORIO
+    ParametroService,
     // ClienteService,   // ✅ si lo estás usando,
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
