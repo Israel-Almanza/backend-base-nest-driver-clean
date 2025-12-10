@@ -31,6 +31,10 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     // return UsuarioMapper.toDomain(model);
   }
 
+  async deleteItem(id: number , t?: Transaction ): Promise<number> {
+    return await this.genericRepo.deleteItem(id,this.usuarioModel,t);
+  }
+
   async findAll(params: any): Promise<{ count: number; rows: Usuario[] }> {
     const query = getQuery(params);
     if(params.id) {

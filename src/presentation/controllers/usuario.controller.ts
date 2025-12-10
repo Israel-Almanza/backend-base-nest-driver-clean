@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Param, Query, HttpException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException } from '@nestjs/common';
 import { UsuarioService } from '@/application/services/usuario.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
@@ -25,6 +25,19 @@ export class UsuarioController {
     try {
       datos.id = id
       const respuesta = await this.usuarioService.actualizar(datos);
+      return new Respuesta('OK', Finalizado.OK, respuesta);
+    } catch (error) {
+      throw new HttpException(
+        new Respuesta(error.message, Finalizado.FAIL), error.httpCode || HttpCodes.userError,
+      );
+    }
+
+  }
+
+  @Delete(':id')
+  async eliminar(@Param('id') id: number) {
+    try {
+      const respuesta = await this.usuarioService.eliminar(id);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(

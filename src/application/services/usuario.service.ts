@@ -59,6 +59,15 @@ export class UsuarioService {
         }
     }
 
+    async eliminar(id:number): Promise<number> {
+        try {
+            const respuesta = await this.repo.deleteItem(id);
+            return respuesta
+        } catch (error) {
+            throw new ErrorApp(error.message, 400);
+        }
+    }
+
     async listar(params): Promise<{ count: number; rows: Usuario[] }> {
         try {
             const respuesta = await this.repo.findAll(params);
