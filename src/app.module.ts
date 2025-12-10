@@ -19,11 +19,12 @@ import { UsuarioService } from './application/services/usuario.service';
 // ✅ TRANSACTION SERVICE
 import { GenericRepository } from './infrastructure/database/generic.repository';
 import { TransactionService } from './infrastructure/database/transaction.service';
+import { PersonaModel } from './infrastructure/database/models/persona.model';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel]), // ✅ agrega UsuarioModel
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel,PersonaModel]), // ✅ agrega UsuarioModel
    ],
   controllers: [ClienteController, UsuarioController], // ✅ agrega UsuarioController
   providers: [
