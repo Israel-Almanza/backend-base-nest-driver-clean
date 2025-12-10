@@ -3,8 +3,6 @@ import { InjectModel } from '@nestjs/sequelize';
 import { UsuarioModel } from '../database/models/usuario.model';
 import { UsuarioRepository } from '../../domain/repositories/usuario.repository';
 import { Usuario } from '../../domain/entities/usuario.entity';
-import { BaseMapper } from '../mappers/base.mapper';
-import { UsuarioMapper } from '../mappers/usuario.mapper';
 import { GenericRepository } from '../database/generic.repository';
 import { Transaction } from 'sequelize';
 import { toJSON, getQuery } from '../lib/utils';
@@ -27,8 +25,6 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
 
   async createOrUpdate(item: Usuario , t?: Transaction ): Promise<Usuario> {
     return await this.genericRepo.createOrUpdate(item,this.usuarioModel,t);
-    // const model = await this.genericRepo.createOrUpdate(item,this.usuarioModel,t);
-    // return UsuarioMapper.toDomain(model);
   }
 
   async deleteItem(id: number , t?: Transaction ): Promise<number> {
@@ -42,7 +38,5 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     }
     const usuarios = await this.usuarioModel.findAndCountAll(query);
     return toJSON(usuarios);
-    // const models = await this.genericRepo.findAll(this.usuarioModel);
-    // return BaseMapper.toDomainList(models, UsuarioMapper.toDomain);
   }
 }
