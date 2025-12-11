@@ -9,6 +9,13 @@ Controller → Service → Repository → Database
 Clean Hexagonal Architecture Diagram
 ![Arquitectura Clean Hexagonal](./docs/arquitectura.png)
 
+## Configuracion de plop en el proyecto
+Ejemplo
+
+npx plop controller --name Test
+npx plop service --name Test
+npx plop repository --name Test
+npx plop repositoryImpl --name Test
 
 ESTRUCTURA FINAL DEL PROYECTO
 

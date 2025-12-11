@@ -26,6 +26,7 @@
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
+    "plop": "^4.0.4",
     "typescript": "^5.2.2"
   }
 }
