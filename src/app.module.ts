@@ -26,11 +26,12 @@ import { ParametroModel } from './infrastructure/database/models/parametro.model
 import { ParametroController } from './presentation/controllers/parametro.controller';
 import { ParametroService } from './application/services/parametro.service';
 import { ParametroRepositoryImpl } from './infrastructure/repositories/parametro.repository.impl';
+import { AuthModel } from './infrastructure/database/models/auth.model';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel]), // ✅ agrega UsuarioModel
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel]), // ✅ agrega UsuarioModel
   ],
   controllers: [ClienteController, UsuarioController, ParametroController], // ✅ agrega UsuarioController
   providers: [
