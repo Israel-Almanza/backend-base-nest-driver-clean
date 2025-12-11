@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { sequelizeConfig } from './infrastructure/database/sequelize.config';
+import { Sequelize } from 'sequelize-typescript';
+import { setupAssociations } from './infrastructure/database/associations';
 
 // MODELS
 import { ClienteModel } from './infrastructure/database/models/cliente.model';
@@ -28,8 +30,8 @@ import { ParametroRepositoryImpl } from './infrastructure/repositories/parametro
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel,PersonaModel, ParametroModel]), // ✅ agrega UsuarioModel
-   ],
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel]), // ✅ agrega UsuarioModel
+  ],
   controllers: [ClienteController, UsuarioController, ParametroController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
@@ -43,4 +45,12 @@ import { ParametroRepositoryImpl } from './infrastructure/repositories/parametro
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private sequelize: Sequelize) { }
+
+  onModuleInit() {
+    setupAssociations();            // ⬅️ SE LLAMA AQUÍ
+    this.sequelize.sync();          // opcional
+  }
+
+}
