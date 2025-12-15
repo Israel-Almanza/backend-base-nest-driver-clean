@@ -22,6 +22,7 @@ Ejemplo
 | Service        | `npx plop service --name demo`        |
 | Controller     | `npx plop controller --name demo`     |
 
+npx plop crud --name demo
 
 ESTRUCTURA FINAL DEL PROYECTO
 

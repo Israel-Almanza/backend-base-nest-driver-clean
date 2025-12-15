@@ -31,23 +31,29 @@ import { MenuModel } from './infrastructure/database/models/menu.model';
 import { MenuRepositoryImpl } from './infrastructure/repositories/menu.repository.impl';
 import { MenuService } from './application/services/menu.service';
 import { MenuController } from './presentation/controllers/menu.controller';
+import { RolModel } from './infrastructure/database/models/rol.model';
+import { RolRepositoryImpl } from './infrastructure/repositories/rol.repository.impl';
+import { RolService } from './application/services/rol.service';
+import { RolController } from './presentation/controllers/rol.controller';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel]), // ✅ agrega UsuarioModel
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel,RolModel]), // ✅ agrega UsuarioModel
   ],
-  controllers: [ClienteController, UsuarioController, ParametroController, MenuController], // ✅ agrega UsuarioController
+  controllers: [ClienteController, UsuarioController, ParametroController, MenuController, RolController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
     ClienteRepositoryImpl,
     UsuarioRepositoryImpl,
     ParametroRepositoryImpl,
     MenuRepositoryImpl,
+    RolRepositoryImpl,
 
     UsuarioService,   // ✅ OBLIGATORIO
     ParametroService,
     MenuService,
+    RolService,
     // ClienteService,   // ✅ si lo estás usando,
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
