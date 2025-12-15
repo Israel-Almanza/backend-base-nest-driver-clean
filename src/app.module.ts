@@ -27,21 +27,27 @@ import { ParametroController } from './presentation/controllers/parametro.contro
 import { ParametroService } from './application/services/parametro.service';
 import { ParametroRepositoryImpl } from './infrastructure/repositories/parametro.repository.impl';
 import { AuthModel } from './infrastructure/database/models/auth.model';
+import { MenuModel } from './infrastructure/database/models/menu.model';
+import { MenuRepositoryImpl } from './infrastructure/repositories/menu.repository.impl';
+import { MenuService } from './application/services/menu.service';
+import { MenuController } from './presentation/controllers/menu.controller';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel]), // ✅ agrega UsuarioModel
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel]), // ✅ agrega UsuarioModel
   ],
-  controllers: [ClienteController, UsuarioController, ParametroController], // ✅ agrega UsuarioController
+  controllers: [ClienteController, UsuarioController, ParametroController, MenuController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
     ClienteRepositoryImpl,
     UsuarioRepositoryImpl,
     ParametroRepositoryImpl,
+    MenuRepositoryImpl,
 
     UsuarioService,   // ✅ OBLIGATORIO
     ParametroService,
+    MenuService,
     // ClienteService,   // ✅ si lo estás usando,
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
