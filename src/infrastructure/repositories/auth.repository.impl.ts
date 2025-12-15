@@ -6,6 +6,7 @@ import { Auth } from '../../domain/entities/auth.entity';
 import { GenericRepository } from '../database/generic.repository';
 import { Transaction } from 'sequelize';
 import { toJSON, getQuery } from '../lib/utils';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthRepositoryImpl implements AuthRepository {
@@ -14,7 +15,17 @@ export class AuthRepositoryImpl implements AuthRepository {
     private readonly authModel: typeof AuthModel,
 
     private readonly genericRepo: GenericRepository,
-  ) {}
+  ) { }
+
+  async codificarContrasena(password: string): Promise<string> {
+
+    const SALT_ROUNDS = 10;
+    return await bcrypt.hash(password, SALT_ROUNDS);
+  }
+
+  async verificarContrasena(password: string, hash: string): Promise<boolean> {
+    return await bcrypt.compare(password, hash);
+  }
 
   async findOne(params = {}): Promise<Auth> {
     const query: any = {};

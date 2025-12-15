@@ -4,9 +4,11 @@ import { UsuarioModel } from '../database/models/usuario.model';
 import { UsuarioRepository } from '../../domain/repositories/usuario.repository';
 import { Usuario } from '../../domain/entities/usuario.entity';
 import { GenericRepository } from '../database/generic.repository';
-import { Transaction } from 'sequelize';
+import { Model, Transaction } from 'sequelize';
 import { toJSON, getQuery } from '../lib/utils';
 import { PersonaModel } from '../database/models/persona.model';
+import { EntidadModel } from '../database/models/entidad.model';
+import { RolModel } from '../database/models/rol.model';
 
 @Injectable()
 export class UsuarioRepositoryImpl implements UsuarioRepository {
@@ -46,5 +48,26 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     ];
     const usuarios = await this.usuarioModel.findAndCountAll(query);
     return toJSON(usuarios);
+  }
+
+
+  async login(params = {}): Promise<Usuario> {
+    const query: any = {};
+    query.where = params;
+
+    query.include = [
+      {
+        model: PersonaModel,
+        as: 'persona',
+      }, {
+        Model: EntidadModel,
+        as: 'entidad'
+      }, {
+        Model: RolModel,
+        as: 'roles'
+      }
+    ];
+    const result = await this.usuarioModel.findOne(query);
+    return result.toJSON();
   }
 }

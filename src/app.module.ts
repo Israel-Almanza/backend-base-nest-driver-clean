@@ -45,7 +45,7 @@ import { PermisoService } from './application/services/permiso.service';
     SequelizeModule.forRoot(sequelizeConfig),
     SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel,RolModel, PermisoModel]), // ✅ agrega UsuarioModel
   ],
-  controllers: [ClienteController, UsuarioController, ParametroController, MenuController, 
+  controllers: [ UsuarioController,ClienteController, ParametroController, MenuController, 
     RolController, PermisoController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
