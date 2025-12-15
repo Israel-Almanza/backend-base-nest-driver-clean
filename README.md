@@ -12,10 +12,16 @@ Clean Hexagonal Architecture Diagram
 ## Configuracion de plop en el proyecto
 Ejemplo
 
-npx plop controller --name test<br>
-npx plop service --name test<br>
-npx plop repository --name test<br>
-npx plop repositoryImpl --name test<br>
+
+| Capa           | Comando                                    |
+| -------------- | ------------------------------------------ |
+| Entity         | `npx plop entity --name demo`         |
+| Model          | `npx plop model --name demo`          |
+| Repository     | `npx plop repository --name demo`     |
+| RepositoryImpl | `npx plop repositoryImpl --name demo` |
+| Service        | `npx plop service --name demo`        |
+| Controller     | `npx plop controller --name demo`     |
+
 
 ESTRUCTURA FINAL DEL PROYECTO
 
