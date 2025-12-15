@@ -208,4 +208,119 @@ module.exports = function (plop) {
         },
     });
 
+    // CRUD COMPLETO 
+
+    plop.setGenerator('crud', {
+        description: 'Crear CRUD completo (DDD)',
+        prompts: [
+            {
+                type: 'input',
+                name: 'fields',
+                message:
+                    'Campos (ej: grupo:string,codigo:string,nombre:string,descripcion:string?)',
+            },
+        ],
+
+        actions(data) {
+            const argv = require('minimist')(process.argv.slice(2));
+
+            if (!argv.name) {
+                throw new Error('Debes usar --name NOMBRE');
+            }
+
+            data.name = argv.name;
+
+            // =========================
+            // TRANSFORMACIÓN DE CAMPOS
+            // =========================
+
+            const rawFields = data.fields.split(',').map(f => f.trim());
+
+            data.entityFields = rawFields.map((field) => {
+                const [name, rawType] = field.split(':');
+                const nullable = rawType.endsWith('?');
+                const type = nullable ? rawType.slice(0, -1) : rawType;
+
+                return {
+                    name,
+                    tsType: nullable ? `${type} | null` : type,
+                };
+            });
+
+            data.modelFields = rawFields.map((field) => {
+                const [name, rawType] = field.split(':');
+                const nullable = rawType.endsWith('?');
+                const type = nullable ? rawType.slice(0, -1) : rawType;
+
+                const map = {
+                    string: {
+                        type: 'STRING',
+                        tsType: 'string',
+                    },
+                    text: {
+                        type: 'TEXT',
+                        tsType: 'string | null',
+                    },
+                    enum: {
+                        type: "ENUM('ACTIVO','INACTIVO')",
+                        tsType: "'ACTIVO' | 'INACTIVO'",
+                    },
+                };
+
+                return {
+                    name,
+                    type: map[type]?.type || 'STRING',
+                    tsType: map[type]?.tsType || 'string',
+                    allowNull: nullable,
+                };
+            });
+
+            return [
+                // ENTITY
+                {
+                    type: 'add',
+                    path: 'src/domain/entities/{{name}}.entity.ts',
+                    templateFile: 'src/plop-templates/entity.hbs',
+                    data: { fields: data.entityFields },
+                },
+
+                // REPOSITORY (INTERFACE)
+                {
+                    type: 'add',
+                    path: 'src/domain/repositories/{{name}}.repository.ts',
+                    templateFile: 'src/plop-templates/repository.hbs',
+                },
+
+                // MODEL
+                {
+                    type: 'add',
+                    path: 'src/infrastructure/database/models/{{name}}.model.ts',
+                    templateFile: 'src/plop-templates/model.hbs',
+                    data: { fields: data.modelFields },
+                },
+
+                // REPOSITORY IMPL
+                {
+                    type: 'add',
+                    path: 'src/infrastructure/repositories/{{name}}.repository.impl.ts',
+                    templateFile: 'src/plop-templates/repositoryImpl.hbs',
+                },
+
+                // SERVICE
+                {
+                    type: 'add',
+                    path: 'src/application/services/{{name}}.service.ts',
+                    templateFile: 'src/plop-templates/service.hbs',
+                },
+
+                // CONTROLLER
+                {
+                    type: 'add',
+                    path: 'src/presentation/controllers/{{name}}.controller.ts',
+                    templateFile: 'src/plop-templates/controller.hbs',
+                },
+            ];
+        },
+    });
+
 };
