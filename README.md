@@ -12,10 +12,10 @@ Clean Hexagonal Architecture Diagram
 ## Configuracion de plop en el proyecto
 Ejemplo
 
-npx plop controller --name Test<br>
-npx plop service --name Test<br>
-npx plop repository --name Test<br>
-npx plop repositoryImpl --name Test<br>
+npx plop controller --name test<br>
+npx plop service --name test<br>
+npx plop repository --name test<br>
+npx plop repositoryImpl --name test<br>
 
 ESTRUCTURA FINAL DEL PROYECTO
 
