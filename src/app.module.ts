@@ -35,13 +35,18 @@ import { RolModel } from './infrastructure/database/models/rol.model';
 import { RolRepositoryImpl } from './infrastructure/repositories/rol.repository.impl';
 import { RolService } from './application/services/rol.service';
 import { RolController } from './presentation/controllers/rol.controller';
+import { PermisoModel } from './infrastructure/database/models/permiso.model';
+import { PermisoController } from './presentation/controllers/permiso.controller';
+import { PermisoRepositoryImpl } from './infrastructure/repositories/permiso.repository.impl';
+import { PermisoService } from './application/services/permiso.service';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel,RolModel]), // ✅ agrega UsuarioModel
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel,RolModel, PermisoModel]), // ✅ agrega UsuarioModel
   ],
-  controllers: [ClienteController, UsuarioController, ParametroController, MenuController, RolController], // ✅ agrega UsuarioController
+  controllers: [ClienteController, UsuarioController, ParametroController, MenuController, 
+    RolController, PermisoController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
     ClienteRepositoryImpl,
@@ -49,11 +54,13 @@ import { RolController } from './presentation/controllers/rol.controller';
     ParametroRepositoryImpl,
     MenuRepositoryImpl,
     RolRepositoryImpl,
+    PermisoRepositoryImpl,
 
     UsuarioService,   // ✅ OBLIGATORIO
     ParametroService,
     MenuService,
     RolService,
+    PermisoService,
     // ClienteService,   // ✅ si lo estás usando,
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
