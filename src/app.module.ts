@@ -39,11 +39,16 @@ import { PermisoModel } from './infrastructure/database/models/permiso.model';
 import { PermisoController } from './presentation/controllers/permiso.controller';
 import { PermisoRepositoryImpl } from './infrastructure/repositories/permiso.repository.impl';
 import { PermisoService } from './application/services/permiso.service';
+import { EntidadModel } from './infrastructure/database/models/entidad.model';
+import { RolUsuarioModel } from './infrastructure/database/models/rolUsuario.model';
+import { RolMenuModel } from './infrastructure/database/models/rolMenu.model';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
-    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel,RolModel, PermisoModel]), // ✅ agrega UsuarioModel
+    SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel,RolModel, PermisoModel,
+      EntidadModel, RolModel,RolUsuarioModel, RolMenuModel
+    ]), // ✅ agrega UsuarioModel
   ],
   controllers: [ UsuarioController,ClienteController, ParametroController, MenuController, 
     RolController, PermisoController], // ✅ agrega UsuarioController
