@@ -45,6 +45,11 @@ export class AuthRepositoryImpl implements AuthRepository {
     return await this.genericRepo.deleteItem(id, this.authModel, t);
   }
 
+  async deleteItemCond(params, t?: Transaction): Promise<number> {
+    return await this.genericRepo.deleteItemCond(params, this.authModel, t);
+  }
+
+
   async findAll(params: any): Promise<{ count: number; rows: Auth[] }> {
     const query = getQuery(params);
 

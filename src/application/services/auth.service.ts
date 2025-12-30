@@ -8,6 +8,8 @@ import { MenuRepositoryImpl } from '@/infrastructure/repositories/menu.repositor
 import { PermisoRepositoryImpl } from '@/infrastructure/repositories/permiso.repository.impl';
 
 import { ErrorApp } from '@/domain/lib/error';
+import { ParametroRepositoryImpl } from '@/infrastructure/repositories/parametro.repository.impl';
+import { generateToken } from '../lib/auth';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +19,7 @@ export class AuthService {
         private readonly menuRepository: MenuRepositoryImpl,
         private readonly authRepository: AuthRepositoryImpl,
         private readonly permisoRepository: PermisoRepositoryImpl,
+        private readonly parametroRepository: ParametroRepositoryImpl,
         private readonly transaction: TransactionService,
     ) { }
 
@@ -41,7 +44,7 @@ export class AuthService {
             usuario.menu = await this.getMenusRoles(usuario.roles);
             usuario.permisos = await this.getPermisos(usuario.roles);
 
-            usuario.token = await generateToken(ParametroRepository, {
+            usuario.token = await generateToken(this.parametroRepository, {
                 idRoles: usuario.roles.map(x => x.id),
                 idUsuario: usuario.id,
                 celular: usuario.celular,
@@ -68,9 +71,9 @@ export class AuthService {
             }
             delete existeUsuario.contrasena;
             const respuesta = await this.getResponse(existeUsuario);
-            await AuthRepository.deleteItemCond({ idUsuario: existeUsuario.id });
-            await AuthRepository.createOrUpdate({
-                ip: request.ipInfo.ip,
+            await this.authRepository.deleteItemCond({ idUsuario: existeUsuario.id });
+            await this.authRepository.createOrUpdate({
+                ip       : request.ipInfo.ip,
                 navegador: request.ipInfo.navigator,
                 userAgent: request.headers['user-agent'],
                 token: respuesta.token,

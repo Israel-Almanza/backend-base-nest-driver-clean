@@ -1,9 +1,15 @@
 export class Auth {
   constructor(
-    public id: number,
-    public usuario: string,
-    public idPersona: number,
-    public idEntidad: number,
+    // public readonly id: number,
 
-  ) {}
+    public ip?: string,
+    public navegador?: string,
+    public userAgent?: string,
+    public token?: string,
+    public idUsuario?: string,
+    public idEntidad?: string,
+
+    public userCreated?: string,
+
+  ) { }
 }

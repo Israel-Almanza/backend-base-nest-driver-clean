@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException } from '@nestjs/common';
+import { Body, Controller, Get, Post,Req, Put, Delete, Param, Query, HttpException } from '@nestjs/common';
 import { UsuarioService } from '@/application/services/usuario.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
@@ -7,14 +7,15 @@ import { AuthService } from '@/application/services/auth.service';
 @Controller('auth')
 export class AuthController {
 
-  constructor(private readonly usuarioService: UsuarioService) { }
+  constructor(
+    private readonly usuarioService: UsuarioService,
+    private readonly authService: AuthService
+  ) { }
 
   @Post('login')
-  async login(@Body() body: any) {
+  async login(@Body() body: any, @Req() req: Request) {
     try {
-      // const respuesta = await this.usuarioService.crear(body);
-      const respuesta = await AuthService.login(body.usuario, body.contrasena);
-      // const respuesta = await this.usuarioService.crear(body);
+      const respuesta = await this.authService.login(body.usuario, body.contrasena, req);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
