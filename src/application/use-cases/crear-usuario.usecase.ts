@@ -4,8 +4,8 @@ import { Usuario } from '../../domain/entities/usuario.entity';
 export class CrearUsuarioUseCase {
   constructor(private repo: UsuarioRepository) {}
 
-  execute(usuario: string, idPersona: number, idEntidad: number) {
-    const _usuario = new Usuario(0, usuario, idPersona, idEntidad);
+  execute(usuario: string, idPersona: number, idEntidad: number, contrasena: string) {
+    const _usuario = new Usuario(0, usuario, idPersona, idEntidad, contrasena);
     return this.repo.createOrUpdate(_usuario);
   }
 }

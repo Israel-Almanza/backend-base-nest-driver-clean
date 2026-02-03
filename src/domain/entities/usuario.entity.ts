@@ -4,6 +4,7 @@ export class Usuario {
     public usuario: string,
     public idPersona: number,
     public idEntidad: number,
+    public contrasena: string,
 
   ) {}
 }

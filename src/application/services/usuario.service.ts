@@ -15,7 +15,7 @@ export class UsuarioService {
         let t;
         try {
             t = await this.transaction.create();
-            const result = await this.repo.createOrUpdate(new Usuario(null, datos.usuario, datos.idPersona, datos.idEntidad), t);
+            const result = await this.repo.createOrUpdate(new Usuario(null, datos.usuario, datos.idPersona, datos.idEntidad, datos.contrasena), t);
             await this.transaction.commit(t);
             return result;
         } catch (error) {
@@ -38,6 +38,7 @@ export class UsuarioService {
                     datos.usuario,
                     datos.idPersona,
                     datos.idEntidad,
+                    datos.contrasena
                 ),
                 t
             );

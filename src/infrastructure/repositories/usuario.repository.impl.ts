@@ -60,14 +60,15 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
         model: PersonaModel,
         as: 'persona',
       }, {
-        Model: EntidadModel,
+        model: EntidadModel,
         as: 'entidad'
       }, {
-        Model: RolModel,
+        model: RolModel,
         as: 'roles'
       }
     ];
     const result = await this.usuarioModel.findOne(query);
+    // console.log("print resultaldo ", result)
     return result.toJSON();
   }
 }

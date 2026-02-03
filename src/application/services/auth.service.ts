@@ -44,6 +44,7 @@ export class AuthService {
             usuario.menu = await this.getMenusRoles(usuario.roles);
             usuario.permisos = await this.getPermisos(usuario.roles);
 
+            console.log("AAAAAAAAAAAAAAAAAA")
             usuario.token = await generateToken(this.parametroRepository, {
                 idRoles: usuario.roles.map(x => x.id),
                 idUsuario: usuario.id,
@@ -61,16 +62,20 @@ export class AuthService {
 
     async login(usuario, contrasena, request) {
         try {
+             console.log("pase esta linea 111 ")
             const existeUsuario: any = await this.usuarioRepository.login({ usuario });
             if (!existeUsuario) {
                 throw new Error('Error en su usuario o su contraseña.');
             }
+            
             const respuestaVerificacion = await this.authRepository.verificarContrasena(contrasena, existeUsuario.contrasena);
             if (!respuestaVerificacion) {
                 throw new Error('Error en su usuario o su contraseña.');
             }
+            console.log("pase esta linea 222", respuestaVerificacion)
             delete existeUsuario.contrasena;
             const respuesta = await this.getResponse(existeUsuario);
+            console.log("pase esta linea 333")
             await this.authRepository.deleteItemCond({ idUsuario: existeUsuario.id });
             await this.authRepository.createOrUpdate({
                 ip       : request.ipInfo.ip,
@@ -84,6 +89,7 @@ export class AuthService {
             });
             return respuesta;
         } catch (err) {
+            console.log("error ----> ", err)
             throw new ErrorApp(err.message, 400);
         }
     }
