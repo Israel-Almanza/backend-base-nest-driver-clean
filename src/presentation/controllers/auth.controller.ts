@@ -8,7 +8,7 @@ import { AuthService } from '@/application/services/auth.service';
 export class AuthController {
 
   constructor(
-    private readonly usuarioService: UsuarioService,
+    // private readonly usuarioService: UsuarioService,
     private readonly authService: AuthService
   ) { }
 

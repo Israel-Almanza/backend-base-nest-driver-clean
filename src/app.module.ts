@@ -42,6 +42,9 @@ import { PermisoService } from './application/services/permiso.service';
 import { EntidadModel } from './infrastructure/database/models/entidad.model';
 import { RolUsuarioModel } from './infrastructure/database/models/rolUsuario.model';
 import { RolMenuModel } from './infrastructure/database/models/rolMenu.model';
+import { AuthController } from './presentation/controllers/auth.controller';
+import { AuthService } from './application/services/auth.service';
+import { AuthRepositoryImpl } from './infrastructure/repositories/auth.repository.impl';
 
 @Module({
   imports: [
@@ -51,7 +54,7 @@ import { RolMenuModel } from './infrastructure/database/models/rolMenu.model';
     ]), // ✅ agrega UsuarioModel
   ],
   controllers: [ UsuarioController,ClienteController, ParametroController, MenuController, 
-    RolController, PermisoController], // ✅ agrega UsuarioController
+    RolController, PermisoController, AuthController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
     ClienteRepositoryImpl,
@@ -60,12 +63,14 @@ import { RolMenuModel } from './infrastructure/database/models/rolMenu.model';
     MenuRepositoryImpl,
     RolRepositoryImpl,
     PermisoRepositoryImpl,
+    AuthRepositoryImpl,
 
     UsuarioService,   // ✅ OBLIGATORIO
     ParametroService,
     MenuService,
     RolService,
     PermisoService,
+    AuthService,
     // ClienteService,   // ✅ si lo estás usando,
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
