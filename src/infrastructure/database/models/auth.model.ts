@@ -36,12 +36,12 @@ export class AuthModel extends Model {
   @Column({ type: DataType.JSONB, allowNull: true })
   tokens: object | null; // { id_token, access_token, refresh_token }
 
-  @Column({ field: 'id_entidad', type: DataType.UUID })
+  @Column({ field: 'id_entidad', type: DataType.INTEGER })
   idEntidad: string;
 
-  @Column({ field: 'id_rol', type: DataType.UUID })
+  @Column({ field: 'id_rol', type: DataType.INTEGER })
   idRol: string;
 
-  @Column({ field: 'id_usuario', type: DataType.UUID })
+  @Column({ field: 'id_usuario', type: DataType.INTEGER })
   idUsuario: string;
 }

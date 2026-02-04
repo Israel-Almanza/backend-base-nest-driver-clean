@@ -1,8 +1,9 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module, NestModule, OnModuleInit, MiddlewareConsumer } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { sequelizeConfig } from './infrastructure/database/sequelize.config';
 import { Sequelize } from 'sequelize-typescript';
 import { setupAssociations } from './infrastructure/database/associations';
+import { IpInfoMiddleware } from './application/lib/ip';
 
 // MODELS
 import { ClienteModel } from './infrastructure/database/models/cliente.model';
@@ -76,12 +77,18 @@ import { RolPermisoModel } from './infrastructure/database/models/rolPermiso.mod
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],
 })
-export class AppModule implements OnModuleInit {
+export class AppModule implements OnModuleInit, NestModule {
   constructor(private sequelize: Sequelize) { }
 
   onModuleInit() {
     setupAssociations();            // ⬅️ SE LLAMA AQUÍ
     this.sequelize.sync();          // opcional
+  }
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(IpInfoMiddleware)
+      .forRoutes('*')
   }
 
 }

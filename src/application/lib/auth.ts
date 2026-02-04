@@ -1,6 +1,9 @@
 'use strict';
 
-import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
+// import jwt, { JwtPayload, SignOptions } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
+import { JwtPayload, SignOptions } from 'jsonwebtoken';
+
 // import { config } from '../../common';
 
 /* ===========================
