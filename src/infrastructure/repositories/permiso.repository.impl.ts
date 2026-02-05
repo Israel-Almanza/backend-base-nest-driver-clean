@@ -69,4 +69,34 @@ export class PermisoRepositoryImpl implements PermisoRepository {
     const result = await this.permisoModel.findAndCountAll(query);
     return toJSON(result);
   }
+
+  async verificarPermisos (params : any): Promise<Permiso> {
+      const query: any = {
+        attributes: ['id']
+      };
+      query.where = {
+        nombre: {
+          [Op.in]: params.permisos
+        }
+  
+      };
+
+      query.include = [
+      {
+        required   : true,
+        through    : { attributes: [] },
+        attributes : [],
+        model      :  RolModel,
+        as         : 'roles',
+        where      : {
+          id: {
+            [Op.in]: params.roles
+          }
+        }
+      }
+    ];
+      
+      const result = await this.permisoModel.findOne(query);
+      return result?.toJSON();
+    }
 }

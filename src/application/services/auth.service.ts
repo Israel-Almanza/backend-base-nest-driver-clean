@@ -74,7 +74,6 @@ export class AuthService {
             delete existeUsuario.contrasena;
             const respuesta = await this.getResponse(existeUsuario);
             await this.authRepository.deleteItemCond({ idUsuario: existeUsuario.id });
-            console.log("print request ::: ", request.ipInfo)
             await this.authRepository.createOrUpdate({
                 ip       : request.ipInfo.ip,
                 navegador: request.ipInfo.navigator,
@@ -91,4 +90,12 @@ export class AuthService {
             throw new ErrorApp(err.message, 400);
         }
     }
+
+    async verificarPermisos (params) {
+    try {
+      const permisos = await this.permisoRepository.verificarPermisos(params);
+      return permisos;
+    } catch (error) {
+    }
+  }
 }

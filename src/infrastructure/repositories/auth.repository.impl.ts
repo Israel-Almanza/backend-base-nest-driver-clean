@@ -4,7 +4,7 @@ import { AuthModel } from '../database/models/auth.model';
 import { AuthRepository } from '../../domain/repositories/auth.repository';
 import { Auth } from '../../domain/entities/auth.entity';
 import { GenericRepository } from '../database/generic.repository';
-import { Transaction } from 'sequelize';
+import { Op, Transaction } from 'sequelize';
 import { toJSON, getQuery } from '../lib/utils';
 import * as bcrypt from 'bcrypt';
 
