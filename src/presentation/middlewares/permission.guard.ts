@@ -10,6 +10,7 @@ export class PermissionGuard implements CanActivate {
     private authService: AuthService
   ) {}
 
+  // TODO israel revisar esta funcion
   async canActivate(context: ExecutionContext): Promise<boolean> {
 
     const permisos = this.reflector.get<string[]>(

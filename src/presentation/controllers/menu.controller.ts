@@ -1,7 +1,11 @@
-import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException, UseGuards } from '@nestjs/common';
 import { MenuService } from '@/application/services/menu.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
+import { JwtAuthGuard } from '../middlewares/jwt-auth.guard';
+import { PermissionGuard } from '../middlewares/permission.guard';
+import { Permissions } from '../middlewares/decorators/permissions.decorator';
+
 
 @Controller('menus')
 export class MenuController {
@@ -61,6 +65,8 @@ export class MenuController {
     }
   }
 
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Permissions('ADMIN:WRITE')
   @Get()
   async listar(@Query() params: any) {
     try {
