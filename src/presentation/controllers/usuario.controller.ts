@@ -1,17 +1,27 @@
-import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Delete, Param, Query, HttpException, UseGuards } from '@nestjs/common';
 import { UsuarioService } from '@/application/services/usuario.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
+import { JwtAuthGuard } from '../middlewares/jwt-auth.guard';
+import { PermissionGuard } from '../middlewares/permission.guard';
+import { Permissions } from '../middlewares/decorators/permissions.decorator';
 
 @Controller('usuarios')
 export class UsuarioController {
 
   constructor(private readonly usuarioService: UsuarioService) { }
 
+  @UseGuards(JwtAuthGuard)
+  // @Permissions('usuarios:listar')
   @Post()
-  async crear(@Body() body: any) {
+  async crear(@Body() body: any, @Req() req: any) {
     try {
-      const respuesta = await this.usuarioService.crear(body);
+      // console.log("print req :::: ", req.user)
+      const data = req.body;
+      data.userCreated = req.user.idUsuario;
+     // userCreated 
+      console.log('data ', data)
+      const respuesta = await this.usuarioService.crear(data);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
@@ -47,10 +57,12 @@ export class UsuarioController {
 
   }
 
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  // @Permissions('usuarios:listar')
   @Get(':id')
   async mostrar(@Param('id') id: number) {
     try {
-      const respuesta = await this.usuarioService.findOne({id: id});
+      const respuesta = await this.usuarioService.findOne({ id: id });
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
@@ -60,6 +72,8 @@ export class UsuarioController {
 
   }
 
+  @UseGuards(JwtAuthGuard, PermissionGuard)
+  @Permissions('usuarios:listar')
   @Get()
   async listar(@Query() params: any) {
     try {

@@ -5,6 +5,6 @@ export class Usuario {
     public idPersona: number,
     public idEntidad: number,
     public contrasena: string,
-
+    public userCreated: number,
   ) {}
 }

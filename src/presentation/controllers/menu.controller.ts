@@ -66,7 +66,7 @@ export class MenuController {
   }
 
   @UseGuards(JwtAuthGuard, PermissionGuard)
-  @Permissions('ADMIN:WRITE')
+  @Permissions('menus:listar')
   @Get()
   async listar(@Query() params: any) {
     try {
