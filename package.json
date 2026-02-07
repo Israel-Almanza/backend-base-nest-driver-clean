@@ -30,6 +30,8 @@
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
     "plop": "^4.0.4",
+    "sequelize-cli": "^6.6.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.2.2"
   }
 }
