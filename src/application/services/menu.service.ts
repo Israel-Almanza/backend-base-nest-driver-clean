@@ -22,7 +22,8 @@ export class MenuService {
                 datos.nombre,
                 datos.ruta,
                 datos.estado,
-                datos.icono
+                datos.icono,
+                datos.userCreated
             );
 
             const result = await this.repo.createOrUpdate(entity, t);
@@ -49,7 +50,8 @@ export class MenuService {
                 datos.nombre,
                 datos.ruta,
                 datos.estado,
-                datos.icono
+                datos.icono,
+                datos.userCreated
             );
 
             const result = await this.repo.createOrUpdate(entity, t);

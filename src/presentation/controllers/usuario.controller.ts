@@ -16,11 +16,8 @@ export class UsuarioController {
   @Post()
   async crear(@Body() body: any, @Req() req: any) {
     try {
-      // console.log("print req :::: ", req.user)
-      const data = req.body;
+      const data = body;
       data.userCreated = req.user.idUsuario;
-     // userCreated 
-      console.log('data ', data)
       const respuesta = await this.usuarioService.crear(data);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {

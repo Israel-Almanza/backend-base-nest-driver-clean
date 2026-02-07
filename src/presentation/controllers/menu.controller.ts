@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Delete, Param, Query, HttpException, UseGuards } from '@nestjs/common';
 import { MenuService } from '@/application/services/menu.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
@@ -12,10 +12,13 @@ export class MenuController {
 
   constructor(private readonly menuService: MenuService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async crear(@Body() body: any) {
+  async crear(@Body() body: any, @Req() req: any) {
     try {
-      const respuesta = await this.menuService.crear(body);
+      const data = body;
+      data.userCreated = req.user.idUsuario;
+      const respuesta = await this.menuService.crear(data);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(

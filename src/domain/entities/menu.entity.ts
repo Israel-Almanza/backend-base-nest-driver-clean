@@ -5,5 +5,6 @@ export class Menu {
     public ruta :string,
     public estado :string,
     public icono :string,
+    public userCreated : number
   ) {}
 }
