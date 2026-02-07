@@ -10,8 +10,8 @@ import { Permissions } from '../middlewares/decorators/permissions.decorator';
 export class UsuarioController {
 
   constructor(private readonly usuarioService: UsuarioService) { }
-
-  @UseGuards(JwtAuthGuard)
+  // Descomentar para el funcionamiento
+  // @UseGuards(JwtAuthGuard)
   // @Permissions('usuarios:listar')
   @Post()
   async crear(@Body() body: any, @Req() req: any) {
@@ -54,7 +54,7 @@ export class UsuarioController {
 
   }
 
-  @UseGuards(JwtAuthGuard, PermissionGuard)
+  // @UseGuards(JwtAuthGuard, PermissionGuard)
   // @Permissions('usuarios:listar')
   @Get(':id')
   async mostrar(@Param('id') id: number) {
@@ -69,8 +69,8 @@ export class UsuarioController {
 
   }
 
-  @UseGuards(JwtAuthGuard, PermissionGuard)
-  @Permissions('usuarios:listar')
+  // @UseGuards(JwtAuthGuard, PermissionGuard)
+  // @Permissions('usuarios:listar')
   @Get()
   async listar(@Query() params: any) {
     try {

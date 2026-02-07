@@ -9,6 +9,16 @@ Controller → Service → Repository → Database
 Clean Hexagonal Architecture Diagram
 ![Arquitectura Clean Hexagonal](./docs/arquitectura.png)
 
+## Configuracion de la base de datos 
+src/infrastructure/infrastructure/sequelize.config.ts
+Cambie en este archivo a sus credenciales de base de datos postgres
+src/infrastructure/infrastructure/sequelize-cli.config.js (Para ejecutar migraciones)
+npx sequelize-cli db:migrate
+
+## Ejecutar el proyecto
+npm run start:dev
+
+
 ## Configuracion de plop en el proyecto
 Ejemplo
 
