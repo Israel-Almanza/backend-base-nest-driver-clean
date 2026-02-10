@@ -3,7 +3,7 @@ import { ParametroService } from '@/application/services/parametro.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
 
-@Controller('parametros')
+@Controller('system/parametros')
 export class ParametroController {
 
   constructor(private readonly parametroService: ParametroService) { }

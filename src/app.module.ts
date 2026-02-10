@@ -47,12 +47,13 @@ import { AuthController } from './presentation/controllers/auth.controller';
 import { AuthService } from './application/services/auth.service';
 import { AuthRepositoryImpl } from './infrastructure/repositories/auth.repository.impl';
 import { RolPermisoModel } from './infrastructure/database/models/rolPermiso.model';
+import { ItemModel } from './infrastructure/database/models/contabilidad/item.model';
 
 @Module({
   imports: [
     SequelizeModule.forRoot(sequelizeConfig),
     SequelizeModule.forFeature([ClienteModel, UsuarioModel, PersonaModel, ParametroModel, AuthModel, MenuModel,RolModel, PermisoModel,
-      EntidadModel, RolModel,RolUsuarioModel, RolMenuModel, RolPermisoModel
+      EntidadModel, RolModel,RolUsuarioModel, RolMenuModel, RolPermisoModel, ItemModel
     ]), // ✅ agrega UsuarioModel
   ],
   controllers: [ UsuarioController,ClienteController, ParametroController, MenuController, 

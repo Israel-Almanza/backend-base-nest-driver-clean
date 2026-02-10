@@ -7,7 +7,7 @@ import { PermissionGuard } from '../middlewares/permission.guard';
 import { Permissions } from '../middlewares/decorators/permissions.decorator';
 
 
-@Controller('menus')
+@Controller('system/menus')
 export class MenuController {
 
   constructor(private readonly menuService: MenuService) {}
@@ -68,8 +68,8 @@ export class MenuController {
     }
   }
 
-  @UseGuards(JwtAuthGuard, PermissionGuard)
-  @Permissions('menus:listar')
+  @UseGuards(JwtAuthGuard) // , PermissionGuard)
+  // @Permissions('menus:listar')
   @Get()
   async listar(@Query() params: any) {
     try {
