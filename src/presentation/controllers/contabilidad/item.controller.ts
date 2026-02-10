@@ -33,6 +33,7 @@ export class ItemController {
       if (req?.user) {
         data.userCreated = req.user.idUsuario;
       }
+      console.log('data ', data)
 
       const respuesta = await this.itemService.crear(data);
       return new Respuesta('OK', Finalizado.OK, respuesta);

@@ -32,10 +32,10 @@ export class ItemModel extends Model {
   @Column({ type: DataType.TEXT })
   descripcion: string // description
 
-  @Column({ type: DataType.TEXT })
+  @Column({ type: DataType.TEXT, field: 'cuenta_ingreso' })
   cuentaIngreso: string // incomeAccount
 
-  @Column({ type: DataType.TEXT, field: 'cuenta_gasto', })
+  @Column({ type: DataType.TEXT, field: 'cuenta_gasto' })
   cuentaGasto: string // expenseAccount
 
   @Column({ type: DataType.TEXT })

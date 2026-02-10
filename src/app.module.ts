@@ -48,6 +48,9 @@ import { AuthService } from './application/services/auth.service';
 import { AuthRepositoryImpl } from './infrastructure/repositories/auth.repository.impl';
 import { RolPermisoModel } from './infrastructure/database/models/rolPermiso.model';
 import { ItemModel } from './infrastructure/database/models/contabilidad/item.model';
+import { ItemController } from './presentation/controllers/contabilidad/item.controller';
+import { ItemRepositoryImpl } from './infrastructure/repositories/contabilidad/item.repository.impl';
+import { ItemService } from './application/services/contabilidad/item.service';
 
 @Module({
   imports: [
@@ -57,7 +60,7 @@ import { ItemModel } from './infrastructure/database/models/contabilidad/item.mo
     ]), // ✅ agrega UsuarioModel
   ],
   controllers: [ UsuarioController,ClienteController, ParametroController, MenuController, 
-    RolController, PermisoController, AuthController], // ✅ agrega UsuarioController
+    RolController, PermisoController, AuthController, ItemController], // ✅ agrega UsuarioController
   providers: [
     GenericRepository,
     ClienteRepositoryImpl,
@@ -67,6 +70,7 @@ import { ItemModel } from './infrastructure/database/models/contabilidad/item.mo
     RolRepositoryImpl,
     PermisoRepositoryImpl,
     AuthRepositoryImpl,
+    ItemRepositoryImpl,
 
     UsuarioService,   // ✅ OBLIGATORIO
     ParametroService,
@@ -74,6 +78,7 @@ import { ItemModel } from './infrastructure/database/models/contabilidad/item.mo
     RolService,
     PermisoService,
     AuthService,
+    ItemService,
     // ClienteService,   // ✅ si lo estás usando,
     TransactionService     // ✅ ESTE ERA EL QUE FALTABA
   ],

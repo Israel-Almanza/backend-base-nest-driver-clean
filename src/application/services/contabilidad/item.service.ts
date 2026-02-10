@@ -16,12 +16,13 @@ export class ItemService {
         try {
             t = await this.transaction.create();
 
-            const entity = new Item(
+            /* const entity = new Item(
                 null,
                 datos.nombre
-            );
+            ); */
 
-            const result = await this.repo.createOrUpdate(entity, t);
+
+            const result = await this.repo.createOrUpdate(datos, t);
             await this.transaction.commit(t);
 
             return result;
@@ -40,12 +41,13 @@ export class ItemService {
         try {
             t = await this.transaction.create();
 
-            const entity = new Item(
+            /* const entity = new Item(
                 datos.id,
                 datos.nombre
-            );
+            ); */
+            console.log('datos update ::: ',datos)
 
-            const result = await this.repo.createOrUpdate(entity, t);
+            const result = await this.repo.createOrUpdate(datos, t);
             await this.transaction.commit(t);
 
             return result;
@@ -57,7 +59,8 @@ export class ItemService {
 
     async findOne(params): Promise<Item> {
         try {
-            return await this.repo.findOne(params);
+            const response = await this.repo.findOne(params);
+            return response
         } catch (error) {
             throw new ErrorApp(error.message, 400);
         }
