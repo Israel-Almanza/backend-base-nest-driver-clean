@@ -22,6 +22,30 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
   async findOne(params = {}): Promise<Usuario> {
     const query: any = {};
     query.where = params;
+    query.include = [
+      {
+        model: PersonaModel,
+        as: 'persona',
+      },
+      {
+        // attributes : ['id', 'nombre', 'sigla', 'idEntidadTutora'],
+        model      : EntidadModel,
+        as         : 'entidad'
+      },
+      {
+        required   : false,
+        through    : { attributes: [] },
+        attributes : [
+          'id',
+          'idEntidad',
+          'nombre',
+          'descripcion',
+          'estado'
+        ],
+        model : RolModel,
+        as    : 'roles'
+      }
+    ];
     const result = await this.usuarioModel.findOne(query);
     return result.toJSON();
   }

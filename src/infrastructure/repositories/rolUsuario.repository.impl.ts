@@ -30,6 +30,10 @@ export class RolUsuarioRepositoryImpl implements RolUsuarioRepository {
     return await this.genericRepo.createOrUpdate(item, this.rolUsuarioModel, t);
   }
 
+  async deleteItemCond(params, t?: Transaction): Promise<number> {
+    return await this.genericRepo.deleteItemCond(params, this.rolUsuarioModel, t);
+  }
+
   async deleteItem(id: number, t?: Transaction): Promise<number> {
     return await this.genericRepo.deleteItem(id, this.rolUsuarioModel, t);
   }

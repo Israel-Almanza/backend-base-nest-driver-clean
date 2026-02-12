@@ -6,19 +6,19 @@ import { JwtAuthGuard } from '../middlewares/jwt-auth.guard';
 import { PermissionGuard } from '../middlewares/permission.guard';
 import { Permissions } from '../middlewares/decorators/permissions.decorator';
 
-@Controller('usuarios')
+@Controller('system/usuarios')
 export class UsuarioController {
 
   constructor(private readonly usuarioService: UsuarioService) { }
   // Descomentar para el funcionamiento
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   // @Permissions('usuarios:listar')
   @Post()
   async crear(@Body() body: any, @Req() req: any) {
     try {
       const data = body;
       data.userCreated = req.user.idUsuario;
-      const respuesta = await this.usuarioService.crear(data);
+      const respuesta = await this.usuarioService.createOrUpdate(data);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
@@ -27,11 +27,12 @@ export class UsuarioController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async actualizar(@Param('id') id: number, @Body() datos: any) {
     try {
       datos.id = id
-      const respuesta = await this.usuarioService.actualizar(datos);
+      const respuesta = await this.usuarioService.createOrUpdate(datos);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
@@ -41,6 +42,7 @@ export class UsuarioController {
 
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async eliminar(@Param('id') id: number) {
     try {
@@ -54,6 +56,7 @@ export class UsuarioController {
 
   }
 
+  @UseGuards(JwtAuthGuard)
   // @UseGuards(JwtAuthGuard, PermissionGuard)
   // @Permissions('usuarios:listar')
   @Get(':id')
@@ -69,6 +72,7 @@ export class UsuarioController {
 
   }
 
+  @UseGuards(JwtAuthGuard)
   // @UseGuards(JwtAuthGuard, PermissionGuard)
   // @Permissions('usuarios:listar')
   @Get()

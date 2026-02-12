@@ -52,6 +52,8 @@ import { ItemController } from './presentation/controllers/contabilidad/item.con
 import { ItemRepositoryImpl } from './infrastructure/repositories/contabilidad/item.repository.impl';
 import { ItemService } from './application/services/contabilidad/item.service';
 import { RolMenuRepositoryImpl } from './infrastructure/repositories/rolMenu.repository.impl';
+import { PersonaRepositoryImpl } from './infrastructure/repositories/persona.repository.impl';
+import { RolUsuarioRepositoryImpl } from './infrastructure/repositories/rolUsuario.repository.impl';
 
 @Module({
   imports: [
@@ -67,6 +69,8 @@ import { RolMenuRepositoryImpl } from './infrastructure/repositories/rolMenu.rep
     ClienteRepositoryImpl,
     UsuarioRepositoryImpl,
     ParametroRepositoryImpl,
+    PersonaRepositoryImpl,
+    RolUsuarioRepositoryImpl,
     MenuRepositoryImpl,
     RolRepositoryImpl,
     RolMenuRepositoryImpl,
