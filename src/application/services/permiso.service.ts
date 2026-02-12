@@ -16,15 +16,15 @@ export class PermisoService {
         try {
             t = await this.transaction.create();
 
-            const entity = new Permiso(
+            /*const entity = new Permiso(
                 null,
                 datos.nombre,
                 datos.descripcion,
                 datos.tipo,
                 datos.estado
-            );
+            ); */
 
-            const result = await this.repo.createOrUpdate(entity, t);
+            const result = await this.repo.createOrUpdate(datos, t);
             await this.transaction.commit(t);
 
             return result;
@@ -43,15 +43,15 @@ export class PermisoService {
         try {
             t = await this.transaction.create();
 
-            const entity = new Permiso(
+            /* const entity = new Permiso(
                 datos.id,
                 datos.nombre,
                 datos.descripcion,
                 datos.tipo,
                 datos.estado
-            );
+            ); */
 
-            const result = await this.repo.createOrUpdate(entity, t);
+            const result = await this.repo.createOrUpdate(datos, t);
             await this.transaction.commit(t);
 
             return result;

@@ -1,17 +1,23 @@
-import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Delete, Param, Query, HttpException, UseGuards } from '@nestjs/common';
 import { PermisoService } from '@/application/services/permiso.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
+import { JwtAuthGuard } from '../middlewares/jwt-auth.guard';
+import { PermissionGuard } from '../middlewares/permission.guard';
+import { Permissions } from '../middlewares/decorators/permissions.decorator';
 
-@Controller('permisos')
+@Controller('system/permisos')
 export class PermisoController {
 
   constructor(private readonly permisoService: PermisoService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async crear(@Body() body: any) {
+  async crear(@Body() body: any, @Req() req: any) {
     try {
-      const respuesta = await this.permisoService.crear(body);
+      const data = body;
+      data.userCreated = req.user.idUsuario;
+      const respuesta = await this.permisoService.crear(data);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
@@ -21,6 +27,7 @@ export class PermisoController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async actualizar(@Param('id') id: number, @Body() datos: any) {
     try {
@@ -35,6 +42,7 @@ export class PermisoController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async eliminar(@Param('id') id: number) {
     try {
@@ -48,6 +56,7 @@ export class PermisoController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async mostrar(@Param('id') id: number) {
     try {
@@ -61,6 +70,7 @@ export class PermisoController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async listar(@Query() params: any) {
     try {
