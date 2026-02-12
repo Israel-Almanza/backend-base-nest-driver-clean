@@ -14,7 +14,7 @@ export class RolMenuRepositoryImpl implements RolMenuRepository {
     private readonly rolMenuModel: typeof RolMenuModel,
 
     private readonly genericRepo: GenericRepository,
-  ) {}
+  ) { }
 
   async findOne(params = {}): Promise<RolMenu> {
     const query: any = {};
@@ -32,6 +32,10 @@ export class RolMenuRepositoryImpl implements RolMenuRepository {
 
   async deleteItem(id: number, t?: Transaction): Promise<number> {
     return await this.genericRepo.deleteItem(id, this.rolMenuModel, t);
+  }
+
+  async deleteItemCond(params, t?: Transaction): Promise<number> {
+    return await this.genericRepo.deleteItemCond(params, this.rolMenuModel, t);
   }
 
   async findAll(params: any): Promise<{ count: number; rows: RolMenu[] }> {

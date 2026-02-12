@@ -1,17 +1,23 @@
-import { Body, Controller, Get, Post, Put, Delete, Param, Query, HttpException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Delete, Param, Query, HttpException, UseGuards } from '@nestjs/common';
 import { RolService } from '@/application/services/rol.service';
 import { Respuesta } from '@/common/respuesta';
 import { Finalizado, HttpCodes } from '@/application/lib/globals';
+import { JwtAuthGuard } from '../middlewares/jwt-auth.guard';
+import { PermissionGuard } from '../middlewares/permission.guard';
+import { Permissions } from '../middlewares/decorators/permissions.decorator';
 
-@Controller('roles')
+@Controller('system/roles')
 export class RolController {
 
-  constructor(private readonly rolService: RolService) {}
+  constructor(private readonly rolService: RolService) { }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async crear(@Body() body: any) {
+  async crear(@Body() body: any, @Req() req: any) {
     try {
-      const respuesta = await this.rolService.crear(body);
+      const data = body;
+      data.userCreated = req.user.idUsuario;
+      const respuesta = await this.rolService.createOrUpdate(data);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
@@ -21,11 +27,12 @@ export class RolController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async actualizar(@Param('id') id: number, @Body() datos: any) {
     try {
       datos.id = id;
-      const respuesta = await this.rolService.actualizar(datos);
+      const respuesta = await this.rolService.createOrUpdate(datos);
       return new Respuesta('OK', Finalizado.OK, respuesta);
     } catch (error) {
       throw new HttpException(
@@ -35,6 +42,7 @@ export class RolController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async eliminar(@Param('id') id: number) {
     try {
@@ -48,6 +56,7 @@ export class RolController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async mostrar(@Param('id') id: number) {
     try {
@@ -61,6 +70,7 @@ export class RolController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async listar(@Query() params: any) {
     try {

@@ -1,5 +1,9 @@
 export class RolMenu {
   constructor(
-    public id: string,
+    // public id: number,
+    public idRol:number,
+    public idMenu:number,
+    public userCreated: number
+    
   ) {}
 }
