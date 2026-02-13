@@ -20,7 +20,7 @@ export const sequelizeConfig: SequelizeModuleOptions = {
   username: 'postgres',
   password: 'publica',
   database: 'db_test',
-  models: [
+  /* models: [
     UsuarioModel,
     PersonaModel,
     EntidadModel,
@@ -34,8 +34,8 @@ export const sequelizeConfig: SequelizeModuleOptions = {
     ParametroModel,
     AuthModel,
     ItemModel
-  ],
-  autoLoadModels: false,
+  ], */
+  autoLoadModels: true,
   synchronize: true,
   logging: false
 };
