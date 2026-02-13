@@ -56,8 +56,24 @@ export class MenuRepositoryImpl implements MenuRepository {
       estado: 'ACTIVO'
     };
 
+     query.attributes = [
+      'id',
+      'nombre',
+      'ruta',
+      'icono',
+      'idMenu',
+      'orden',
+      'estado'
+    ];
+
+    query.order = [['orden', 'ASC']];
+
+
     query.include = [
       {
+         required   : true,
+        through    : { attributes: [] },
+        attributes : [],
         model: RolModel,
         as: 'roles',
         where      : {

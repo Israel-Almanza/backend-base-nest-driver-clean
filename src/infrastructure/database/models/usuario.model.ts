@@ -16,4 +16,11 @@ export class UsuarioModel extends Model {
   })
   contrasena: string;
 
+  /* @Column({
+    type: DataType.ENUM('ACTIVO', 'INACTIVO'),
+    allowNull: false,
+    field: 'estado',
+  })
+  estado: 'ACTIVO' | 'INACTIVO'; */
 }
+

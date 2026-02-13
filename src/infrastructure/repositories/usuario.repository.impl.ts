@@ -77,16 +77,42 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
 
   async login(params = {}): Promise<Usuario> {
     const query: any = {};
+    query.attributes = [
+      'id',
+      'contrasena',
+      'usuario',
+      // 'estado'
+    ];
     query.where = params;
 
     query.include = [
       {
+        attributes: [
+          'id',
+          'tipoDocumento',
+          'numeroDocumento',
+          'complemento',
+          'nombres',
+          'primerApellido',
+          'segundoApellido',
+          'fechaNacimiento'
+        ],
         model: PersonaModel,
         as: 'persona',
       }, {
+        attributes: ['id', 'nombre', 'sigla'],
         model: EntidadModel,
         as: 'entidad'
       }, {
+        required: true,
+        through: { attributes: [] },
+        attributes: [
+          'id',
+          'idEntidad',
+          'nombre',
+          'descripcion',
+          'estado'
+        ],
         model: RolModel,
         as: 'roles'
       }
