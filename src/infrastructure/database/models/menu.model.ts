@@ -22,7 +22,7 @@ export class MenuModel extends Model {
 
   @Column({
     type: DataType.STRING(200),
-    allowNull: false,
+    defaultValue: null,
   })
   ruta: string;
 
